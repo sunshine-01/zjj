@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <script src='lib/vue-2.4.0.js'></script>
+</head>
+
+<body>
+    <div id='app'>
+        <li v-for="item in arr">{{ item }}</li>
+        <input type="text" v-model='newValue'>
+        <button @click="addArr">新增数据</button>
+
+
+        <li v-for="item in obj">{{ item }}</li>
+        key: <input type="text" v-model='objkey'>
+        value: <input type="text" v-model='objvalue'>
+        <button @click="addprop">新增数据</button>
+
+    </div>
+
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                arr: [1, 2, 3, 4, 5],
+                newValue: '',
+                obj: {
+                    name: '莎莎',
+                    sex: '一点都不sex'
+                },
+                objkey: '',
+                objvalue: ''
+            },
+            methods: {
+                addArr() {
+                    this.arr.push(this.newValue)
+                },
+                // vue在监听数据变化的 不能监听到对象的属性新增
+                // 你们的项目 兼容到哪个版本的IE？
+                // vue2.x的项目 不能兼容IE8
+                // vue中的双向数据绑定用的object.definepro… 不支持IE8 同时polyfill不能实现兼容
+                addprop() {
+                    // this.obj[this.objkey] = this.objvalue
+                    // 参数1 修改的对象
+                    // 参数2 要修改的属性
+                    // 参数3 属性的值
+                    this.$set(this.obj,this.objkey,this.objvalue)
+                }
+            }
+
+        })
+    </script>
+</body>
+
+</html>
